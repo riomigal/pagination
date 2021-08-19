@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="d-flex justify-content-center py-3">
+    <nav aria-label="">
+      <ul class="pagination">
+        <li class="page-item" [ngClass]="{ 'd-none': currentPage <= 0 }">
+          <a class="page-link" (click)="currentPage = 0">First</a>
+        </li>
+        <li class="page-item" [ngClass]="{ 'd-none': currentPage <= 0 }">
+          <a class="page-link" (click)="currentPage = currentPage - 1">Prev</a>
+        </li>
+        <ng-container *ngFor="let image of images; let i = index">
+          <li
+            class="page-item"
+            [ngClass]="{ active: i === currentPage }"
+            *ngIf="checkWindowIndex(i)"
+          >
+            <a class="page-link" (click)="currentPage = i">{{ i + 1 }}</a>
+          </li>
+        </ng-container>
+
+        <li
+          class="page-item"
+          [ngClass]="{
+            'd-none': currentPage == images.length - 1
+          }"
+        >
+          <a class="page-link" (click)="currentPage = currentPage + 1">Next</a>
+        </li>
+
+        <li
+          class="page-item"
+          [ngClass]="{ 'd-none': currentPage == images.length - 1 }"
+        >
+          <a class="page-link" (click)="currentPage = images.length - 1"
+            >Last</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div *ngIf="currentPage > -1" class="row">
+    <h4 class="text-center w-100">{{ images[currentPage].title }}</h4>
+    <img class="img-thumbnail" [src]="images[currentPage].url" />
+  </div>
+</div>
